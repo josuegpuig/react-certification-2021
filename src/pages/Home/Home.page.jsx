@@ -23,7 +23,7 @@ function HomePage() {
 
   return (
     <>
-      <HomeSection className="homepage" ref={sectionRef}>
+      <HomeSection className="homepage" ref={sectionRef} data-testid="home-component">
         <h1>Hello stranger!</h1>
       </HomeSection>
       <CardsSection className="cards">{videosInfo()}</CardsSection>
