@@ -50,7 +50,10 @@ function Header() {
           <StyledSearchIcon />
         </SearchIconContainer>
       </NavSearch>
-      <NavButtonContainer onClick={() => setOpenMenu(!openMenu)}>
+      <NavButtonContainer
+        data-testid="button-menu"
+        onClick={() => setOpenMenu(!openMenu)}
+      >
         <NavButton click={openMenu} />
       </NavButtonContainer>
       <NavActions click={openMenu}>
