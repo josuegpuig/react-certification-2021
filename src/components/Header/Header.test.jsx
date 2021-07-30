@@ -1,15 +1,27 @@
 import React from 'react';
 import { render, screen, cleanup } from '@testing-library/react';
+import { Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
 
-import App from '../App/App.component';
+import AuthProvider from '../../providers/Auth';
+import Header from './Header.component';
 
-describe('App Component Tests', () => {
+describe('Header Component Tests', () => {
   const setState = jest.fn();
   const useStateSpy = jest.spyOn(React, 'useState');
   useStateSpy.mockImplementation((init) => [init, setState]);
 
+  const history = createMemoryHistory();
+  history.push = jest.fn();
+
   beforeEach(() => {
-    render(<App />);
+    render(
+      <Router history={history}>
+        <AuthProvider>
+          <Header />
+        </AuthProvider>
+      </Router>
+    );
   });
 
   it('Should display the home link', async () => {
@@ -22,8 +34,8 @@ describe('App Component Tests', () => {
     button.click();
     expect(button.href).toBe('http://localhost/login');
 
-    const title = screen.getByText('Welcome back!');
-    expect(title).toBeInTheDocument();
+    expect(history.push).toHaveBeenCalled();
+    expect(history.push.mock.calls[0][0]).toEqual('/login');
   });
 
   afterEach(() => {
