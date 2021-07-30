@@ -26,6 +26,24 @@ function Header() {
     history.push('/');
   }
 
+  const AuthButton = () => {
+    return authenticated ? (
+      <>
+        <div>
+          <Link to="/" onClick={deAuthenticate}>
+            ← logout
+          </Link>
+        </div>
+      </>
+    ) : (
+      <div>
+        <Link to="/login" onClick={() => setOpenMenu(false)}>
+          Log In
+        </Link>
+      </div>
+    );
+  };
+
   let homeButton;
   if (openMenu) {
     homeButton = (
@@ -62,21 +80,7 @@ function Header() {
           </Toggle>
           Dark Mode
         </div>
-        {authenticated ? (
-          <>
-            <div>
-              <Link to="/" onClick={deAuthenticate}>
-                ← logout
-              </Link>
-            </div>
-          </>
-        ) : (
-          <div>
-            <Link to="/login" onClick={() => setOpenMenu(false)}>
-              Log In
-            </Link>
-          </div>
-        )}
+        {AuthButton()}
       </NavActions>
     </HeaderContainer>
   );

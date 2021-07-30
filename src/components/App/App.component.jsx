@@ -8,7 +8,6 @@ import NotFound from '../../pages/NotFound';
 import SecretPage from '../../pages/Secret';
 import Private from '../Private';
 import Layout from '../Layout';
-import Header from '../Header';
 import { random } from '../../utils/fns';
 
 function App() {
@@ -33,7 +32,6 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Header />
         <Layout>
           <Switch>
             <Route exact path="/">
