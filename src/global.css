@@ -41,13 +41,13 @@ body {
 
 a {
   text-decoration: none;
-  font-weight: bold;
-  color: white;
+  color: initial;
 }
 
 a:active {
-  color: blueviolet;
+  color: initial;
 }
 
-hr {
+a:visited {
+  color: initial;
 }
