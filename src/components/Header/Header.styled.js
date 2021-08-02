@@ -38,6 +38,7 @@ export const SearchIconContainer = styled.div`
   align-items: center;
   border: solid 1px gray;
   border-radius: 0 5px 5px 0;
+  cursor: pointer;
 `;
 
 export const NavIcon = styled.div`
