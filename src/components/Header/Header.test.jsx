@@ -4,6 +4,7 @@ import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 
 import AuthProvider from '../../providers/Auth';
+import { SearchProvider } from '../../hooks/SearchProvider/SearchProvider';
 import Header from './Header.component';
 
 describe('Header Component Tests', () => {
@@ -18,7 +19,9 @@ describe('Header Component Tests', () => {
     render(
       <Router history={history}>
         <AuthProvider>
-          <Header />
+          <SearchProvider>
+            <Header />
+          </SearchProvider>
         </AuthProvider>
       </Router>
     );
@@ -36,6 +39,16 @@ describe('Header Component Tests', () => {
 
     expect(history.push).toHaveBeenCalled();
     expect(history.push.mock.calls[0][0]).toEqual('/login');
+  });
+
+  it('Should open the menu with home as first child', async () => {
+    const button = screen.getByTestId('button-menu');
+
+    button.click();
+    const closest = button.nextElementSibling;
+    const firstOption = closest.querySelector('a');
+
+    expect(firstOption.innerHTML).toBe('Home');
   });
 
   afterEach(() => {

@@ -12,7 +12,7 @@ import {
 function Card(props) {
   return (
     <CardContainer>
-      <Link to="/">
+      <Link to={{ pathname: `/video/${props.videoId}` }}>
         <ImageContainer image={props.image.medium.url} />
         <DescriptionContainer>
           <Title>{props.title}</Title>

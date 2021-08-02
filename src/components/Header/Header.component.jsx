@@ -12,13 +12,23 @@ import {
   NavButtonContainer,
   Toggle,
 } from './Header.styled';
+import { SearchVideos } from '../../resources/calls';
 
 import { useAuth } from '../../providers/Auth';
+import { useSearch } from '../../hooks/SearchProvider/SearchProvider';
+import { fetchSearch } from '../../utils/fetchApi';
 
 function Header() {
   const history = useHistory();
   const { authenticated, logout } = useAuth();
   const [openMenu, setOpenMenu] = useState(false);
+  const [term, setTerm] = useState('wizeline');
+  const { changeSearch } = useSearch();
+
+  function SearchVideo() {
+    const url = SearchVideos(term);
+    fetchSearch(url, changeSearch);
+  }
 
   function deAuthenticate(event) {
     event.preventDefault();
@@ -62,9 +72,14 @@ function Header() {
       </NavIcon>
       <NavSearch>
         <SearchContainer>
-          <input type="text" placeholder="Search" />
+          <input
+            type="text"
+            placeholder="Search"
+            value={term}
+            onChange={(e) => setTerm(e.target.value)}
+          />
         </SearchContainer>
-        <SearchIconContainer>
+        <SearchIconContainer onClick={() => SearchVideo()}>
           <StyledSearchIcon />
         </SearchIconContainer>
       </NavSearch>
