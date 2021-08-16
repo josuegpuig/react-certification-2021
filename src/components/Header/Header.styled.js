@@ -5,6 +5,7 @@ import { ReactComponent as SearchIcon } from './searchIcon.svg';
 export const StyledSearchIcon = styled(SearchIcon)`
   height: 20px;
   width: 20px;
+  fill: ${(props) => (props.theme.darkMode ? 'white' : 'black')};
 `;
 
 export const SearchContainer = styled.div`
@@ -17,6 +18,8 @@ export const SearchContainer = styled.div`
     height: 26px;
     width: 300px;
     border: none;
+    background-color: transparent;
+    color: ${(props) => (props.theme.darkMode ? 'white' : 'black')};
 
     &:focus {
       outline: none;
@@ -44,6 +47,10 @@ export const SearchIconContainer = styled.div`
 export const NavIcon = styled.div`
   cursor: pointer;
 
+  a {
+    color: inherit;
+  }
+
   @media (max-width: 768px) {
     display: none;
   }
@@ -59,6 +66,10 @@ export const NavSearch = styled.div`
 
 export const NavActions = styled.div`
   display: flex;
+
+  a {
+    color: inherit;
+  }
 
   div {
     padding: 4px 6px;
@@ -180,7 +191,8 @@ export const HeaderContainer = styled.header`
   min-height: 3.5rem;
   height: 3.5rem;
   padding: 0 1rem;
-  background-color: white;
+  background-color: ${(props) => (props.theme.darkMode ? 'black' : 'white')};
+  color: ${(props) => (props.theme.darkMode ? 'white' : 'black')};
   box-shadow: inset 0 -1px 0 0 #ebebeb;
   position: fixed;
   top: 0;

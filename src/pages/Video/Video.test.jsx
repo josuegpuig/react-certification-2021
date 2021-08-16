@@ -4,6 +4,7 @@ import { Router, Route } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 
 import { useGetVideo } from '../../hooks/VideoDetails/VideoDetails';
+import { Theme } from '../../hooks/ThemeProvider/ThemeProvider';
 import VideoPage from './Video.page';
 import video from '../../utils/video-mock.json';
 import suggestions from '../../utils/video-suggestions-mock.json';
@@ -22,11 +23,13 @@ describe('Card Component Tests', () => {
 
   beforeEach(() => {
     render(
-      <Router history={history}>
-        <Route path="/video/:id">
-          <VideoPage />
-        </Route>
-      </Router>
+      <Theme>
+        <Router history={history}>
+          <Route path="/video/:id">
+            <VideoPage />
+          </Route>
+        </Router>
+      </Theme>
     );
   });
 

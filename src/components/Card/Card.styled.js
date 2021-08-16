@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import styled from 'styled-components';
 
 export const CardContainer = styled.div`
@@ -7,7 +8,7 @@ export const CardContainer = styled.div`
   max-height: 345px;
   max-width: 345px;
   margin: 10px;
-  background-color: white;
+  background-color: ${(props) => (props.theme.darkMode ? 'black' : 'white')};
 
   @media (max-width: 768px) {
     height: auto;
@@ -39,7 +40,7 @@ export const Image = styled.img`
 
 export const Title = styled.h2`
   margin: 0;
-  color: black;
+  color: ${(props) => (props.theme.darkMode ? 'white' : 'black')};
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.6;

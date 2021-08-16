@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen, cleanup } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { BrowserRouter } from 'react-router-dom';
+import { Theme } from '../../hooks/ThemeProvider/ThemeProvider';
 
 import Card from './Card.component';
 
@@ -26,12 +27,14 @@ describe('Card Component Tests', () => {
   beforeEach(() => {
     render(
       <BrowserRouter>
-        <Card
-          videoId={mockInfo.videoId}
-          image={mockInfo.image}
-          title={mockInfo.title}
-          description={mockInfo.description}
-        />
+        <Theme>
+          <Card
+            videoId={mockInfo.videoId}
+            image={mockInfo.image}
+            title={mockInfo.title}
+            description={mockInfo.description}
+          />
+        </Theme>
       </BrowserRouter>
     );
   });
