@@ -2,16 +2,18 @@ import React from 'react';
 import Header from '../Header';
 
 import { SearchProvider } from '../../hooks/SearchProvider/SearchProvider';
-
-import './Layout.styles.css';
+import { Theme } from '../../hooks/ThemeProvider/ThemeProvider';
+import { LayoutContainer } from './Layout.styled';
 
 function Layout({ children }) {
   return (
     <SearchProvider>
-      <main className="container">
-        <Header />
-        {children}
-      </main>
+      <Theme>
+        <LayoutContainer>
+          <Header />
+          {children}
+        </LayoutContainer>
+      </Theme>
     </SearchProvider>
   );
 }

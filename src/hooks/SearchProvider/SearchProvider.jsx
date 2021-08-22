@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import React, { createContext, useContext, useState } from 'react';
 
 const SearchProviderContext = createContext(null);

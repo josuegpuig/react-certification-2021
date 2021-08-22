@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import {
   HeaderContainer,
@@ -16,14 +16,27 @@ import { SearchVideos } from '../../resources/calls';
 
 import { useAuth } from '../../providers/Auth';
 import { useSearch } from '../../hooks/SearchProvider/SearchProvider';
+import { useTheme } from '../../hooks/ThemeProvider/ThemeProvider';
 import { fetchSearch } from '../../utils/fetchApi';
 
 function Header() {
   const history = useHistory();
   const { authenticated, logout } = useAuth();
   const [openMenu, setOpenMenu] = useState(false);
+  const [darkToggle, setDarkToggle] = useState(false);
   const [term, setTerm] = useState('wizeline');
   const { changeSearch } = useSearch();
+  const { setTheme } = useTheme();
+
+  useEffect(() => {
+    if (darkToggle) {
+      setTheme({ type: 'DARKMODE' });
+      return;
+    }
+
+    setTheme({ type: 'LIGHTMODE' });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [darkToggle]);
 
   function SearchVideo() {
     const url = SearchVideos(term);
@@ -73,13 +86,14 @@ function Header() {
       <NavSearch>
         <SearchContainer>
           <input
+            data-testid="SearchMenu"
             type="text"
             placeholder="Search"
             value={term}
             onChange={(e) => setTerm(e.target.value)}
           />
         </SearchContainer>
-        <SearchIconContainer onClick={() => SearchVideo()}>
+        <SearchIconContainer data-testid="button-search" onClick={() => SearchVideo()}>
           <StyledSearchIcon />
         </SearchIconContainer>
       </NavSearch>
@@ -93,7 +107,12 @@ function Header() {
         {homeButton}
         <div>
           <Toggle>
-            <input type="checkbox" />
+            <input
+              data-testid="check-theme"
+              type="checkbox"
+              checked={darkToggle}
+              onChange={() => setDarkToggle((dark) => !dark)}
+            />
             <span />
           </Toggle>
           Dark Mode

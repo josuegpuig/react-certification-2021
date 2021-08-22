@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTheme } from '../../hooks/ThemeProvider/ThemeProvider';
 
 import {
   CardContainer,
@@ -10,12 +11,14 @@ import {
 } from './Card.styled';
 
 function Card(props) {
+  const { theme } = useTheme();
+
   return (
-    <CardContainer>
+    <CardContainer dark={theme.darkMode}>
       <Link to={{ pathname: `/video/${props.videoId}` }}>
         <ImageContainer image={props.image.medium.url} />
         <DescriptionContainer>
-          <Title>{props.title}</Title>
+          <Title dark={theme.darkMode}>{props.title}</Title>
           <Description>{props.description}</Description>
         </DescriptionContainer>
       </Link>
