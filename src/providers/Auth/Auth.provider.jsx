@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
-
-import { AUTH_STORAGE_KEY } from '../../utils/constants';
-import { storage } from '../../utils/storage';
+import { useHistory } from 'react-router';
+import app from '../../utils/fireBaseConfig';
 
 const AuthContext = React.createContext(null);
 
@@ -14,27 +13,54 @@ function useAuth() {
 }
 
 function AuthProvider({ children }) {
+  const [authUser, setAuthUser] = useState(null);
   const [authenticated, setAuthenticated] = useState(false);
+  const [error, setError] = useState('');
+  const history = useHistory();
 
   useEffect(() => {
-    const lastAuthState = storage.get(AUTH_STORAGE_KEY);
-    const isAuthenticated = Boolean(lastAuthState);
-
-    setAuthenticated(isAuthenticated);
+    app.auth().onAuthStateChanged((user) => {
+      if (user) {
+        setAuthUser(user);
+        setAuthenticated(true);
+      }
+    });
   }, []);
 
-  const login = useCallback(() => {
-    setAuthenticated(true);
-    storage.set(AUTH_STORAGE_KEY, true);
-  }, []);
+  const login = useCallback(
+    async (info) => {
+      const { user, password } = info;
+
+      await app
+        .auth()
+        .signInWithEmailAndPassword(user, password)
+        .then((result) => {
+          console.log(result);
+          console.log('llamando a history');
+          history.push('/');
+        })
+        .catch((err) => {
+          setError(err.message);
+        });
+    },
+    [history]
+  );
 
   const logout = useCallback(() => {
-    setAuthenticated(false);
-    storage.set(AUTH_STORAGE_KEY, false);
+    app
+      .auth()
+      .signOut()
+      .then(() => {
+        setAuthUser(null);
+        setAuthenticated(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+      });
   }, []);
 
   return (
-    <AuthContext.Provider value={{ login, logout, authenticated }}>
+    <AuthContext.Provider value={{ authUser, login, logout, authenticated, error }}>
       {children}
     </AuthContext.Provider>
   );
