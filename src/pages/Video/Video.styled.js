@@ -30,18 +30,33 @@ export const VideoDetails = styled.section`
   }
 `;
 
+export const VideoLists = styled.section`
+  width: 30%;
+`;
+
 export const VideoSuggestions = styled.section`
   display: flex;
   flex-direction: column;
   overflow: scroll;
-  width: 30%;
-  height: 100vh;
+  height: ${(props) => (props.favorites ? '50vh' : '100vh')};
   background-color: ${(props) => (props.theme.darkMode ? 'black' : 'white')};
 
   @media (max-width: 768px) {
     width: 100%;
     height: auto;
   }
+`;
+
+export const ButtonFavorite = styled.button`
+  width: 80%;
+  margin: 0 auto;
+  cursor: pointer;
+  font-family: 'Roboto';
+  margin-top: 1rem;
+  padding: 0.4rem 0.6rem;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 3px;
 `;
 
 export const SuggestionContainer = styled.div`

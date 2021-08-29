@@ -9,8 +9,13 @@ import { Theme } from '../../hooks/ThemeProvider/ThemeProvider';
 import Header from './Header.component';
 
 import { SearchVideos } from '../../resources/calls';
+import app from '../../utils/fireBaseConfig';
 
 jest.mock('../../resources/calls');
+jest.mock('../../utils/fireBaseConfig');
+app.auth = jest.fn(() => ({
+  onAuthStateChanged: jest.fn(),
+}));
 
 SearchVideos.mockImplementation(() => {
   jest.fn();
@@ -50,7 +55,7 @@ describe('Header Component Tests', () => {
     expect(button.href).toBe('http://localhost/login');
 
     expect(history.push).toHaveBeenCalled();
-    expect(history.push.mock.calls[0][0]).toEqual('/login');
+    expect(history.push.mock.calls[0][0].pathname).toEqual('/login');
   });
 
   it('Should open the menu with home as first child', async () => {
@@ -71,7 +76,8 @@ describe('Header Component Tests', () => {
     const firstOption = closest.querySelector('a');
 
     firstOption.click();
-    expect(history.push).toHaveBeenCalled();
+    await expect(history.push).toHaveBeenCalled();
+    expect(history.push).toHaveBeenCalledWith('/');
   });
 
   it('Should search videos on click', async () => {
@@ -90,9 +96,13 @@ describe('Header Component Tests', () => {
   it('Should change theme on toggle', async () => {
     const checkTheme = screen.getByTestId('check-theme');
 
-    fireEvent.change(checkTheme, { target: { value: true } });
+    fireEvent.click(checkTheme);
 
-    expect(checkTheme.value).toBe('true');
+    expect(checkTheme.value).toBe('on');
+    await expect(screen.getByTestId('HeaderMenu')).toHaveStyle('background-color: black');
+
+    fireEvent.click(checkTheme);
+    await expect(screen.getByTestId('HeaderMenu')).toHaveStyle('background-color: white');
   });
 
   afterEach(() => {

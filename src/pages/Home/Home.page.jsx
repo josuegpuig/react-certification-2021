@@ -7,10 +7,12 @@ import Card from '../../components/Card';
 import { SearchVideos } from '../../resources/calls';
 import { fetchSearch } from '../../utils/fetchApi';
 import { useSearch } from '../../hooks/SearchProvider/SearchProvider';
+import { useFavorites } from '../../hooks/FavoritesProvider/FavoritesProvider';
 
 function HomePage() {
   const sectionRef = useRef(null);
   const { search, changeSearch } = useSearch();
+  const { favoritesList } = useFavorites();
 
   useEffect(() => {
     function SearchVideo() {
@@ -35,6 +37,7 @@ function HomePage() {
           title={video.snippet.title}
           description={video.snippet.description}
           videoId={video.id.videoId}
+          favorite={!!favoritesList[video.id.videoId]}
         />
       );
     });

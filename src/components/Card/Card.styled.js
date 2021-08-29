@@ -3,9 +3,9 @@ import styled from 'styled-components';
 
 export const CardContainer = styled.div`
   border: solid 1px gray;
-  height: 345px;
+  height: 370px;
   width: 345px;
-  max-height: 345px;
+  max-height: 370px;
   max-width: 345px;
   margin: 10px;
   background-color: ${(props) => (props.theme.darkMode ? 'black' : 'white')};
@@ -50,4 +50,23 @@ export const Title = styled.h2`
 export const Description = styled.p`
   color: gray;
   font-size: 0.74rem;
+`;
+
+export const ButtonsContainer = styled.div`
+  display: ${(props) => (props.shown ? 'flex' : 'none')};
+  justify-content: space-evenly;
+`;
+
+export const ButtonAdd = styled.button`
+  background-color: #007bff;
+  color: white;
+  padding: 6px;
+  cursor: pointer;
+`;
+
+export const ButtonRemove = styled.button`
+  background-color: red;
+  color: white;
+  padding: 6px;
+  cursor: pointer;
 `;

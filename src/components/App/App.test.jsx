@@ -2,6 +2,13 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App.component';
 
+import app from '../../utils/fireBaseConfig';
+
+jest.mock('../../utils/fireBaseConfig');
+app.auth = jest.fn(() => ({
+  onAuthStateChanged: jest.fn(),
+}));
+
 describe('App Component Tests', () => {
   beforeEach(() => {
     render(<App />);

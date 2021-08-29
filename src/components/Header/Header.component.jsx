@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import {
   HeaderContainer,
   NavActions,
@@ -27,14 +27,10 @@ function Header() {
   const [term, setTerm] = useState('wizeline');
   const { changeSearch } = useSearch();
   const { setTheme } = useTheme();
+  const location = useLocation();
 
   useEffect(() => {
-    if (darkToggle) {
-      setTheme({ type: 'DARKMODE' });
-      return;
-    }
-
-    setTheme({ type: 'LIGHTMODE' });
+    setTheme({ type: `${darkToggle ? 'DARKMODE' : 'LIGHTMODE'}` });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [darkToggle]);
 
@@ -49,6 +45,10 @@ function Header() {
     history.push('/');
   }
 
+  const FavoritesButton = () => {
+    return authenticated ? <Link to="/favorites">Favorites</Link> : null;
+  };
+
   const AuthButton = () => {
     return authenticated ? (
       <>
@@ -60,7 +60,13 @@ function Header() {
       </>
     ) : (
       <div>
-        <Link to="/login" onClick={() => setOpenMenu(false)}>
+        <Link
+          to={{
+            pathname: '/login',
+            state: { prev: location.pathname },
+          }}
+          onClick={() => setOpenMenu(false)}
+        >
           Log In
         </Link>
       </div>
@@ -79,7 +85,7 @@ function Header() {
   }
 
   return (
-    <HeaderContainer>
+    <HeaderContainer data-testid="HeaderMenu">
       <NavIcon>
         <Link to="/">Home</Link>
       </NavIcon>
@@ -105,6 +111,7 @@ function Header() {
       </NavButtonContainer>
       <NavActions click={openMenu}>
         {homeButton}
+        {FavoritesButton()}
         <div>
           <Toggle>
             <input

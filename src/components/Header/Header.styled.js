@@ -66,6 +66,7 @@ export const NavSearch = styled.div`
 
 export const NavActions = styled.div`
   display: flex;
+  align-items: center;
 
   a {
     color: inherit;

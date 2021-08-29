@@ -4,6 +4,14 @@ import { BrowserRouter } from 'react-router-dom';
 
 import Secret from './Secret.page';
 import AuthProvider from '../../providers/Auth';
+import app from '../../utils/fireBaseConfig';
+
+jest.mock('../../utils/fireBaseConfig');
+app.auth = jest.fn(() => ({
+  onAuthStateChanged: jest.fn(() => {
+    Promise.resolve(true);
+  }),
+}));
 
 describe('App Component Tests', () => {
   beforeEach(() => {
