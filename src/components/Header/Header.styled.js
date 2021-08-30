@@ -96,8 +96,8 @@ export const Toggle = styled.label`
   position: relative;
   display: inline-block;
   width: 50px;
-  height: 25px;
-  top: 1px;
+  height: 20px;
+  top: 4px;
 
   input {
     opacity: 0;
@@ -124,10 +124,10 @@ export const Toggle = styled.label`
     &:before {
       position: absolute;
       content: '';
-      height: 18px;
-      width: 18px;
+      height: 14px;
+      width: 14px;
       left: 4px;
-      bottom: 4px;
+      bottom: 3px;
       background-color: white;
       -webkit-transition: 0.4s;
       transition: 0.4s;
@@ -204,7 +204,6 @@ export const HeaderContainer = styled.header`
     min-height: unset;
     max-height: unset;
     height: fit-content;
-    background-color: white;
     z-index: 1;
   }
 `;

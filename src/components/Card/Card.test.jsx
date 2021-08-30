@@ -101,3 +101,54 @@ describe('Card Component Tests', () => {
     cleanup();
   });
 });
+
+describe('Card Component Favorite Tests', () => {
+  const history = createMemoryHistory();
+  history.push = jest.fn();
+  const mockInfo = {
+    videoId: 'e4Test',
+    image: {
+      medium: {
+        url: 'imgTest.jpg',
+      },
+    },
+    title: 'Test Card',
+    description: 'Card Description',
+  };
+  const favorite = true;
+
+  beforeEach(() => {
+    render(
+      <BrowserRouter>
+        <AuthProvider>
+          <Theme>
+            <FavoritesProvider>
+              <Card
+                videoId={mockInfo.videoId}
+                image={mockInfo.image}
+                title={mockInfo.title}
+                description={mockInfo.description}
+                favorite={favorite}
+              />
+            </FavoritesProvider>
+          </Theme>
+        </AuthProvider>
+      </BrowserRouter>
+    );
+  });
+
+  it('Should remove video from favorites', async () => {
+    const container = screen.getByTestId('card-container');
+
+    fireEvent.mouseEnter(container);
+    await screen.getByTestId('buttons-container');
+    const addButton = screen.getByRole('button');
+
+    fireEvent.click(addButton);
+    expect(mockRemoveFunc).toHaveBeenCalled();
+  });
+
+  afterEach(() => {
+    cleanup();
+  });
+});
