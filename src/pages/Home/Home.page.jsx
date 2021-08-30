@@ -46,7 +46,7 @@ function HomePage() {
   return (
     <>
       <HomeSection className="homepage" ref={sectionRef} data-testid="home-component">
-        <h1>Hello stranger!</h1>
+        <h1>Your favorite video site</h1>
       </HomeSection>
       <CardsSection className="cards">{videosInfo()}</CardsSection>
     </>
